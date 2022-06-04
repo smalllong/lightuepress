@@ -1,0 +1,35 @@
+{
+  "name": "lightuepress",
+  "version": "0.0.1",
+  "description": "Lightue powered static site generator",
+  "browser": "index.js",
+  "type": "module",
+  "unpkg": "dist/lightuepress.min.js",
+  "scripts": {
+    "build": "rollup -c && terser dist/iife.js -o dist/lightuepress.min.js",
+    "dev": "rollup -c -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smalllong/lightuepress.git"
+  },
+  "files": [
+    "index.js",
+    "dist/lightuepress.min.js"
+  ],
+  "keywords": [
+    "lightue"
+  ],
+  "author": "Xiaolong Li",
+  "license": "MIT",
+  "dependencies": {
+    "lightue": "^0.2.10",
+    "marked": "^4.0.16"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "postcss": "^8.4.14",
+    "rollup-plugin-postcss": "^4.0.2"
+  }
+}
