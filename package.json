@@ -8,6 +8,7 @@
   "scripts": {
     "build": "rollup -c && terser dist/iife.js -o dist/lightuepress.min.js",
     "dev": "rollup -c -w",
+    "postinstall": "patch-package",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,6 +17,8 @@
   },
   "files": [
     "index.js",
+    "layout.css",
+    "page.css",
     "dist/lightuepress.min.js"
   ],
   "keywords": [
@@ -25,7 +28,9 @@
   "license": "MIT",
   "dependencies": {
     "lightue": "^0.2.10",
-    "marked": "^4.0.16"
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
+    "snarkdown": "^2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",

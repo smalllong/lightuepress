@@ -1,5 +1,5 @@
 import L from 'lightue'
-import { marked } from 'marked'
+import snarkdown from 'snarkdown'
 import './layout.css'
 import './page.css'
 
@@ -32,6 +32,9 @@ function Lightuepress(config) {
   }
 
   L({
+    onclick: (e) => {
+      if (e.target.tagName == 'A' && !e.target.classList.contains('noscroll')) window.scrollTo(0, 0)
+    },
     navBar: {
       navBarTitle: L.a({
         _href: () => '#' + S.locale,
@@ -55,12 +58,12 @@ function Lightuepress(config) {
           dialog: locales.map((l) =>
             L.a.sidebarItem({
               _href: () => '#' + l + S.route.slice(1),
-              $class: { active: () => l == S.locale },
+              $class: { active: () => l == S.locale, noscroll: 1 },
               $$: config.locales[l].label,
             })
           ),
         },
-        navItem: L.a({
+        navItem: L.a.noscroll({
           $if: config.repo,
           _href: 'https://github.com/' + config.repo,
           _target: '_blank',
@@ -81,6 +84,7 @@ function Lightuepress(config) {
       $tag: 'main',
       onclick: (e) => {
         e.preventDefault()
+        e.stopPropagation()
         if (e.target.tagName == 'A') {
           var url = new URL(e.target.href)
           if (url.origin == location.origin) {
@@ -107,7 +111,7 @@ function Lightuepress(config) {
     var xhr = new XMLHttpRequest()
     xhr.open('GET', (path.endsWith('/') ? path + 'index' : path) + '.md')
     xhr.onload = (e) => {
-      document.querySelector('main').innerHTML = marked(xhr.response)
+      document.querySelector('main').innerHTML = snarkdown(xhr.response)
     }
     xhr.send()
   }
