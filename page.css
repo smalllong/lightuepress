@@ -1,0 +1,26 @@
+a {
+  color: var(--c-brand);
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--c-divider);
+  padding-bottom: 0.3rem;
+}
+
+code {
+  background-color: var(--code-inline-bg-color);
+  padding: .3rem .5rem;
+  border-radius: .2rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+pre > code {
+  display: block;
+  background-color: var(--code-bg-color);
+}
