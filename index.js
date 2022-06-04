@@ -83,15 +83,16 @@ function Lightuepress(config) {
     page: {
       $tag: 'main',
       onclick: (e) => {
+        var a = e.target
+        while (a && a.tagName != 'A') a = a.parentElement
+        if (a == null) return
         e.preventDefault()
         e.stopPropagation()
-        if (e.target.tagName == 'A') {
-          var url = new URL(e.target.href)
-          if (url.origin == location.origin) {
-            location.hash = '#' + url.pathname + url.hash
-            window.scrollTo(0, 0)
-          } else window.open(e.target.href)
-        }
+        var url = new URL(a.href)
+        if (url.origin == location.origin) {
+          location.hash = '#' + S.locale + url.pathname.slice(1) + url.hash
+          window.scrollTo(0, 0)
+        } else window.open(a.href)
       },
     },
   })
@@ -116,6 +117,7 @@ function Lightuepress(config) {
     xhr.send()
   }
 
+  if (location.hash == '') location.hash = navigator.language.slice(0, 2) == 'zh' ? '#/zh/' : '#/'
   go()
   window.addEventListener('hashchange', go)
 }

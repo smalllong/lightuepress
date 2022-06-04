@@ -1,5 +1,6 @@
 a {
   color: var(--c-brand);
+  text-decoration: none;
 }
 a:hover {
   text-decoration: underline;
@@ -14,8 +15,8 @@ h2 {
 
 code {
   background-color: var(--code-inline-bg-color);
-  padding: .3rem .5rem;
-  border-radius: .2rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.2rem;
   white-space: pre-wrap;
   word-break: break-all;
 }
