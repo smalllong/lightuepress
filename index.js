@@ -32,9 +32,6 @@ function Lightuepress(config) {
   }
 
   L({
-    onclick: (e) => {
-      if (e.target.tagName == 'A' && !e.target.classList.contains('noscroll')) window.scrollTo(0, 0)
-    },
     navBar: {
       navBarTitle: L.a({
         _href: () => '#' + S.locale,
@@ -58,12 +55,12 @@ function Lightuepress(config) {
           dialog: locales.map((l) =>
             L.a.sidebarItem({
               _href: () => '#' + l + S.route.slice(1),
-              $class: { active: () => l == S.locale, noscroll: 1 },
+              $class: { active: () => l == S.locale },
               $$: config.locales[l].label,
             })
           ),
         },
-        navItem: L.a.noscroll({
+        navItem: L.a({
           $if: config.repo,
           _href: 'https://github.com/' + config.repo,
           _target: '_blank',
@@ -91,11 +88,12 @@ function Lightuepress(config) {
         var url = new URL(a.href)
         if (url.origin == location.origin) {
           location.hash = '#' + S.locale + url.pathname.slice(1) + url.hash
-          window.scrollTo(0, 0)
         } else window.open(a.href)
       },
     },
   })
+
+  var cachedMD = {}
 
   function go() {
     var paths = location.hash.slice(1).split('#'),
@@ -109,12 +107,20 @@ function Lightuepress(config) {
       S.locale = '/'
       S.route = path
     }
-    var xhr = new XMLHttpRequest()
-    xhr.open('GET', (path.endsWith('/') ? path + 'index' : path) + '.md')
-    xhr.onload = (e) => {
-      document.querySelector('main').innerHTML = snarkdown(xhr.response)
+    if (cachedMD[path]) {
+      window.scrollTo(0, 0)
+      document.querySelector('main').innerHTML = cachedMD[path]
+    } else {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', (path.endsWith('/') ? path + 'index' : path) + '.md')
+      xhr.onload = (e) => {
+        var result = snarkdown(xhr.response)
+        window.scrollTo(0, 0)
+        document.querySelector('main').innerHTML = result
+        cachedMD[path] = result
+      }
+      xhr.send()
     }
-    xhr.send()
   }
 
   if (location.hash == '') location.hash = navigator.language.slice(0, 2) == 'zh' ? '#/zh/' : '#/'
