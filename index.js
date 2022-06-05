@@ -99,6 +99,7 @@ function Lightuepress(config) {
     var paths = location.hash.slice(1).split('#'),
       path = paths[0],
       hash = paths[1]
+    if (path == '') path = '/'
     var locale = locales.find((l) => l != '/' && path.startsWith(l))
     if (locale) {
       S.locale = locale
@@ -123,7 +124,6 @@ function Lightuepress(config) {
     }
   }
 
-  if (location.hash == '') location.hash = navigator.language.slice(0, 2) == 'zh' ? '#/zh/' : '#/'
   go()
   window.addEventListener('hashchange', go)
 }

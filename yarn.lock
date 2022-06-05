@@ -533,9 +533,9 @@ klaw-sync@^6.0.0:
     graceful-fs "^4.1.11"
 
 lightue@^0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/lightue/-/lightue-0.2.10.tgz#0d7f44d6754f78b446908c2e773d278a51795a95"
-  integrity sha512-Zxy8CExwJIftof0oexmvJmnxdeypy8Or2/ww8SDUBeHh7O/PUArA+dBCMQ+hUppzc2MK2GThqLObLsxVDjSKwQ==
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/lightue/-/lightue-0.2.12.tgz#57f439f8f06cab401747bcba4c8868f0ddd3d6ff"
+  integrity sha512-c6XtK7s+sCk75SpUk9X9mk5e7G7IjQxRGLB/GKzOINu5cO8njblKEAQV0m6jRFrQ/TN1N6y7bDFvn7Moftce6A==
 
 lilconfig@^2.0.3, lilconfig@^2.0.5:
   version "2.0.5"
