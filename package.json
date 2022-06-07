@@ -44,5 +44,8 @@
     "@rollup/plugin-node-resolve": "^13.3.0",
     "postcss": "^8.4.14",
     "rollup-plugin-postcss": "^4.0.2"
-  }
+  },
+  "browserslist": [
+    "firefox >= 34"
+  ]
 }
