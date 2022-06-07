@@ -31,7 +31,7 @@ index 0f708af..b758ba3 100644
 +
 +/** Parse Markdown into an HTML String. */
 +export default function parse(md, prevLinks) {
-+	let tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:!\[([^\]]*?)\]\(([^)]+?)\))|\[([^\]]+)(\]\(([^)]+?)\))|(?:(?:^|\n+)([^\s].*)\n(-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
++	var tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:!\[([^\]]*?)\]\(([^)]+?)\))|\[([^\]]+)(\]\(([^)]+?)\))|(?:(?:^|\n+)([^\s].*)\n(-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
 +		context = [],
 +		out = '',
 +		links = prevLinks || {},
@@ -39,8 +39,8 @@ index 0f708af..b758ba3 100644
 +		chunk, prev, token, inner, t;
 +
 +	function tag(token) {
-+		let desc = TAGS[token[1] || ''];
-+		let end = context[context.length-1] == token;
++		var desc = TAGS[token[1] || ''];
++		var end = context[context.length-1] == token;
 +		if (!desc) return token;
 +		if (!desc[1]) return desc[0];
 +		if (end) context.pop();
@@ -49,7 +49,7 @@ index 0f708af..b758ba3 100644
 +	}
 +
 +	function flush() {
-+		let str = '';
++		var str = '';
 +		while (context.length) str += tag(context[context.length-1]);
 +		return str;
 +	}
