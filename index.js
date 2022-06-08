@@ -95,6 +95,61 @@ function Lightuepress(config) {
 
   var cachedMD = {}
 
+  function highlightCode(mainEl) {
+    var codeBlocks = mainEl.querySelectorAll('pre > code')
+    codeBlocks.forEach((cb) => {
+      cb.innerHTML = highlight(cb.innerHTML, cb.className.slice(9))
+    })
+  }
+
+  function wrap(part, classFlag) {
+    if (part) return `<span class="hl-${classFlag}">${part}</span>`
+    else return ''
+  }
+
+  function highlight(code, lang) {
+    if (lang == 'js') {
+      // string|string|keyword|number|method|identifier|comment
+      return code
+        .replace(/&gt;/g, '>')
+        .split(
+          /('.*?[^\\]')|(".*?[^\\]")|\b(var|const|let|function|for|in|of|import|from)\b|\b(\d+)\b|([\$\w]+)(?=\()|([\$\w]+)|(\/\/[^\n]*)/
+        )
+        .map((part, i, arr) => {
+          if (i % 8) return
+          var roundArr = arr.slice(i, i + 8)
+          return (
+            part +
+            wrap(roundArr[1], 's') +
+            wrap(roundArr[2], 's') +
+            wrap(roundArr[3], 'k') +
+            wrap(roundArr[4], 'n') +
+            wrap(roundArr[5], 'm') +
+            wrap(roundArr[6], 'i') +
+            wrap(roundArr[7], 'c')
+          )
+        })
+        .join('')
+    } else if (lang == 'html') {
+      // start|start|end|attr|value
+      return code
+        .split(/(&lt;\w+)|(&gt;)|(&lt;\/\w+&gt;)|(\w+)(?==)|(".*?")/)
+        .map((part, i, arr) => {
+          if (i % 6) return
+          var roundArr = arr.slice(i, i + 6)
+          return (
+            part +
+            wrap(roundArr[1], 's') +
+            wrap(roundArr[2], 's') +
+            wrap(roundArr[3], 's') +
+            wrap(roundArr[4], 'i') +
+            wrap(roundArr[5], 'n')
+          )
+        })
+        .join('')
+    }
+  }
+
   function go() {
     var paths = location.hash.slice(1).split('#'),
       path = paths[0],
@@ -108,16 +163,19 @@ function Lightuepress(config) {
       S.locale = '/'
       S.route = path
     }
+    var mainEl = document.querySelector('main')
     if (cachedMD[path]) {
       window.scrollTo(0, 0)
-      document.querySelector('main').innerHTML = cachedMD[path]
+      mainEl.innerHTML = cachedMD[path]
+      highlightCode(mainEl)
     } else {
       var xhr = new XMLHttpRequest()
       xhr.open('GET', (path.endsWith('/') ? path + 'index' : path) + '.md')
       xhr.onload = (e) => {
         var result = snarkdown(xhr.response)
         window.scrollTo(0, 0)
-        document.querySelector('main').innerHTML = result
+        mainEl.innerHTML = result
+        highlightCode(mainEl)
         cachedMD[path] = result
       }
       xhr.send()

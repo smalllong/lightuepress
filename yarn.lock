@@ -532,7 +532,7 @@ klaw-sync@^6.0.0:
   dependencies:
     graceful-fs "^4.1.11"
 
-lightue@^0.2.10:
+lightue@^0.2.12:
   version "0.2.12"
   resolved "https://registry.yarnpkg.com/lightue/-/lightue-0.2.12.tgz#57f439f8f06cab401747bcba4c8868f0ddd3d6ff"
   integrity sha512-c6XtK7s+sCk75SpUk9X9mk5e7G7IjQxRGLB/GKzOINu5cO8njblKEAQV0m6jRFrQ/TN1N6y7bDFvn7Moftce6A==

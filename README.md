@@ -7,12 +7,14 @@
 Lightue and snarkdown powered static site generator
 
 It is similar to VuePress, VitePress, Docsify. But it has the following highlights:
+
 - Super lightweight (<5KB min+br)
 - No compilation or server configuration needed
 
 ## Usage
 
 Create your entry html file, add CDN script and pass in your configurations:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +24,7 @@ Create your entry html file, add CDN script and pass in your configurations:
     <title>Your title</title>
   </head>
   <body>
-    <script src="https://unpkg.com/lightuepress@0.0.5/dist/lightuepress.min.js"></script>
+    <script src="https://unpkg.com/lightuepress@0.0.7/dist/lightuepress.min.js"></script>
     <script>
       // optionally set your default path based on user language
       if (location.hash == '') location.hash = navigator.language.slice(0, 2) == 'zh' ? '#/zh/' : '#/'

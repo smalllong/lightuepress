@@ -25,3 +25,22 @@ pre > code {
   display: block;
   background-color: var(--code-bg-color);
 }
+
+.hl-k {
+  color: #f9f;
+}
+.hl-s {
+  color: #f75;
+}
+.hl-n {
+  color: #6f6;
+}
+.hl-m {
+  color: #ff7;
+}
+.hl-i {
+  color: #57f;
+}
+.hl-c {
+  color: #bbb;
+}
