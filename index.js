@@ -85,10 +85,15 @@ function Lightuepress(config) {
         if (a == null) return
         e.preventDefault()
         e.stopPropagation()
-        var url = new URL(a.href)
-        if (url.origin == location.origin) {
-          location.hash = '#' + S.locale + url.pathname.slice(1) + url.hash
-        } else window.open(a.href)
+        var href = a.getAttribute('href')
+        if (href[0] == '#') {
+          location.hash = '#' + S.locale + S.route.slice(1) + href
+        } else if (!href.startsWith('http')) {
+          var parent = S.route.slice(0, S.route.lastIndexOf('/')),
+            grandPa = parent.slice(0, parent.lastIndexOf('/')),
+            abso = href.replace(/^\.\./, grandPa).replace(/^\./, parent).split('#')
+          location.hash = '#' + S.locale + abso[0].slice(1) + (abso[1] ? '#'+encodeURIComponent(abso[1]) : '')
+        } else window.open(href)
       },
     },
   })
@@ -131,19 +136,20 @@ function Lightuepress(config) {
         })
         .join('')
     } else if (lang == 'html') {
-      // start|start|end|attr|value
+      // start|start|end|attr|value|comment
       return code
-        .split(/(&lt;\w+)|(&gt;)|(&lt;\/\w+&gt;)|(\w+)(?==)|(".*?")/)
+        .split(/(&lt;\w+)|(&gt;)|(&lt;\/\w+&gt;)|([\w-]+)(?==)|(".*?")|(&lt;!--[\w\s]+--&gt;)/)
         .map((part, i, arr) => {
-          if (i % 6) return
-          var roundArr = arr.slice(i, i + 6)
+          if (i % 7) return
+          var roundArr = arr.slice(i, i + 7)
           return (
             part +
             wrap(roundArr[1], 's') +
             wrap(roundArr[2], 's') +
             wrap(roundArr[3], 's') +
             wrap(roundArr[4], 'i') +
-            wrap(roundArr[5], 'n')
+            wrap(roundArr[5], 'n') +
+            wrap(roundArr[6], 'c')
           )
         })
         .join('')
@@ -155,28 +161,34 @@ function Lightuepress(config) {
       path = paths[0],
       hash = paths[1]
     if (path == '') path = '/'
-    var locale = locales.find((l) => l != '/' && path.startsWith(l))
+    var locale = locales.find((l) => l != '/' && path.startsWith(l)), samepage
     if (locale) {
+      samepage = S.locale == locale && S.route == '/' + path.slice(locale.length)
       S.locale = locale
       S.route = '/' + path.slice(locale.length)
     } else {
+      samepage = S.locale == '/' && S.route == path
       S.locale = '/'
       S.route = path
     }
     var mainEl = document.querySelector('main')
-    if (cachedMD[path]) {
+    if (samepage) {
+      hash && window.scrollTo(0, mainEl.querySelector('[href="#' + hash + '"]').offsetTop - 60)
+      return
+    }
+    function goWithCache() {
       window.scrollTo(0, 0)
       mainEl.innerHTML = cachedMD[path]
+      hash && window.scrollTo(0, mainEl.querySelector('[href="#' + hash + '"]').offsetTop - 60)
       highlightCode(mainEl)
-    } else {
+    }
+    if (cachedMD[path]) goWithCache()
+    else {
       var xhr = new XMLHttpRequest()
       xhr.open('GET', (path.endsWith('/') ? path + 'index' : path) + '.md')
       xhr.onload = (e) => {
-        var result = snarkdown(xhr.response)
-        window.scrollTo(0, 0)
-        mainEl.innerHTML = result
-        highlightCode(mainEl)
-        cachedMD[path] = result
+        cachedMD[path] = snarkdown(xhr.response)
+        goWithCache()
       }
       xhr.send()
     }

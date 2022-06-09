@@ -94,7 +94,7 @@ index 0f708af..b758ba3 100644
 +		// Headings:
 +		else if (token[12] || token[14]) {
 +			t = 'h' + (token[14] ? token[14].length : (token[13]>'=' ? 1 : 2));
-+			chunk = '<'+t+'>' + (token[12] || token[15]) + '</'+t+'>';
++			chunk = '<'+t+'>' + (token[14] && token[14].length < 4 ? '<a href="#'+encodeURIComponent(token[15].replace(/[\(\)]/g, '-'))+'">#</a> ' : '') + (token[12] || token[15]) + '</'+t+'>';
 +		}
 +		// `code`:
 +		else if (token[16]) {
