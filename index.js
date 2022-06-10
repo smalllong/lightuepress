@@ -9,27 +9,28 @@ function Lightuepress(config) {
     S = L.useState({
       locale: '/',
       config: {},
-      route: '/',
+      route: '', // default is empty, later it changed to '/' and load md file
     })
 
   L.watchEffect(() => (S.config = config.locales[S.locale]))
 
-  function SidebarLinks(arr, level) {
-    return arr.map((item) => ({
-      $$: item.link
-        ? L.a({
-            _href: () => '#' + S.locale + item.link.slice(1),
-            _class: 'sidebar-item sidebar-item-' + level,
-            $class: { active: () => S.route == item.link },
-            $$: item.text,
-          })
-        : {
-            _class: 'sidebar-item sidebar-item-' + level,
-            $$: item.text,
-          },
-      sidebarLinks: item.children ? SidebarLinks(item.children, level + 1) : null,
-    }))
-  }
+  if (!window.matchMedia('(prefers-color-scheme:dark)').matches) document.body.classList.add('light')
+    function SidebarLinks(arr, level) {
+      return arr.map((item) => ({
+        $$: item.link
+          ? L.a({
+              _href: () => '#' + S.locale + item.link.slice(1),
+              _class: 'sidebar-item sidebar-item-' + level,
+              $class: { active: () => S.route == item.link },
+              $$: item.text,
+            })
+          : {
+              _class: 'sidebar-item sidebar-item-' + level,
+              $$: item.text,
+            },
+        sidebarLinks: item.children ? SidebarLinks(item.children, level + 1) : null,
+      }))
+    }
 
   L({
     navBar: {
@@ -48,6 +49,7 @@ function Lightuepress(config) {
             })
           ),
         $_locales: {
+          $if: locales.length > 1,
           navItem: L.button({
             $$: () => config.locales[S.locale].selectText,
             $$arrow: ' ▽',
@@ -65,6 +67,12 @@ function Lightuepress(config) {
           _href: 'https://github.com/' + config.repo,
           _target: '_blank',
           $$: 'GitHub ↗',
+        }),
+        toggleLight: L.button.navItem({
+          $$: '💡',
+          onclick: (e) => {
+            document.body.classList.toggle('light')
+          },
         }),
       },
     },
@@ -92,7 +100,7 @@ function Lightuepress(config) {
           var parent = S.route.slice(0, S.route.lastIndexOf('/')),
             grandPa = parent.slice(0, parent.lastIndexOf('/')),
             abso = href.replace(/^\.\./, grandPa).replace(/^\./, parent).split('#')
-          location.hash = '#' + S.locale + abso[0].slice(1) + (abso[1] ? '#'+encodeURIComponent(abso[1]) : '')
+          location.hash = '#' + S.locale + abso[0].slice(1) + (abso[1] ? '#' + encodeURIComponent(abso[1]) : '')
         } else window.open(href)
       },
     },
@@ -161,7 +169,8 @@ function Lightuepress(config) {
       path = paths[0],
       hash = paths[1]
     if (path == '') path = '/'
-    var locale = locales.find((l) => l != '/' && path.startsWith(l)), samepage
+    var locale = locales.find((l) => l != '/' && path.startsWith(l)),
+      samepage
     if (locale) {
       samepage = S.locale == locale && S.route == '/' + path.slice(locale.length)
       S.locale = locale
