@@ -1,5 +1,5 @@
 diff --git a/node_modules/snarkdown/dist/snarkdown.es.js b/node_modules/snarkdown/dist/snarkdown.es.js
-index 0f708af..b758ba3 100644
+index 0f708af..772ac5c 100644
 --- a/node_modules/snarkdown/dist/snarkdown.es.js
 +++ b/node_modules/snarkdown/dist/snarkdown.es.js
 @@ -1,2 +1,105 @@
@@ -31,7 +31,7 @@ index 0f708af..b758ba3 100644
 +
 +/** Parse Markdown into an HTML String. */
 +export default function parse(md, prevLinks) {
-+	var tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:!\[([^\]]*?)\]\(([^)]+?)\))|\[([^\]]+)(\]\(([^)]+?)\))|(?:(?:^|\n+)([^\s].*)\n(-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|(?<!```)\n{2,}|__|\*\*|[_*]|~~)/gm,
++	var tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:\n*^``` *(\w*)\n([\s\S]*?)\n```$\n*)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:!\[([^\]]*?)\]\(([^)]+?)\))|\[([^\]]+)(\]\(([^)]+?)\))|(?:(?:^|\n+)([^\s].*)\n(-{3,}|={3,})(?:\n+|$))|\n*^(#{1,6})\s*(.+)$\n*|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
 +		context = [],
 +		out = '',
 +		links = prevLinks || {},

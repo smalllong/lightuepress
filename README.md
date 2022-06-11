@@ -24,7 +24,7 @@ Create your entry html file, add CDN script and pass in your configurations:
     <title>Your title</title>
   </head>
   <body>
-    <script src="https://unpkg.com/lightuepress@0.1.0/dist/lightuepress.min.js"></script>
+    <script src="https://unpkg.com/lightuepress@0.1.1/dist/lightuepress.min.js"></script>
     <script>
       // optionally set your default path based on user language
       if (location.hash == '') location.hash = navigator.language.slice(0, 2) == 'zh' ? '#/zh/' : '#/'
