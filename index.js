@@ -10,30 +10,35 @@ function Lightuepress(config) {
       locale: '/',
       config: {},
       route: '', // default is empty, later it changed to '/' and load md file
+      sidebarShown: false,
     })
 
   L.watchEffect(() => (S.config = config.locales[S.locale]))
 
   if (!window.matchMedia('(prefers-color-scheme:dark)').matches) document.body.classList.add('light')
-    function SidebarLinks(arr, level) {
-      return arr.map((item) => ({
-        $$: item.link
-          ? L.a({
-              _href: () => '#' + S.locale + item.link.slice(1),
-              _class: 'sidebar-item sidebar-item-' + level,
-              $class: { active: () => S.route == item.link },
-              $$: item.text,
-            })
-          : {
-              _class: 'sidebar-item sidebar-item-' + level,
-              $$: item.text,
-            },
-        sidebarLinks: item.children ? SidebarLinks(item.children, level + 1) : null,
-      }))
-    }
+  function SidebarLinks(arr, level) {
+    return arr.map((item) => ({
+      $$: item.link
+        ? L.a({
+            _href: () => '#' + S.locale + item.link.slice(1),
+            _class: 'sidebar-item sidebar-item-' + level,
+            $class: { active: () => S.route == item.link },
+            $$: item.text,
+          })
+        : {
+            _class: 'sidebar-item sidebar-item-' + level,
+            $$: item.text,
+          },
+      sidebarLinks: item.children ? SidebarLinks(item.children, level + 1) : null,
+    }))
+  }
 
   L({
     navBar: {
+      sidebarToggler: L.button.navItem({
+        $$: '📑',
+        onclick: (e) => (S.sidebarShown = !S.sidebarShown),
+      }),
       navBarTitle: L.a({
         _href: () => '#' + S.locale,
         $$: () => S.config.title,
@@ -77,6 +82,7 @@ function Lightuepress(config) {
       },
     },
     sidebar: {
+      $class: { shown: () => S.sidebarShown },
       sidebarLinks: () => {
         for (var i in S.config.sidebar) {
           if (S.route.startsWith(i)) {
@@ -161,6 +167,18 @@ function Lightuepress(config) {
           )
         })
         .join('')
+    } else if (lang == 'css') {
+      // property|number|selector|selector
+      return code
+        .split(/([\w-]+:)|\b(\d+)\b|(#[\w-_]+)|(\.[\w-_]+)/)
+        .map((part, i, arr) => {
+          if (i % 5) return
+          var roundArr = arr.slice(i, i + 5)
+          return (
+            part + wrap(roundArr[1], 'k') + wrap(roundArr[2], 'n') + wrap(roundArr[3], 'i') + wrap(roundArr[4], 'i')
+          )
+        })
+        .join('')
     }
   }
 
@@ -180,6 +198,7 @@ function Lightuepress(config) {
       S.locale = '/'
       S.route = path
     }
+    S.sidebarShown = false
     var mainEl = document.querySelector('main')
     if (samepage) {
       hash && window.scrollTo(0, mainEl.querySelector('[href="#' + hash + '"]').offsetTop - 60)

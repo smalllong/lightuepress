@@ -14,13 +14,29 @@ h2 {
 }
 
 code {
+  position: relative;
   background-color: var(--code-inline-bg-color);
   padding: 0.3rem 0.5rem;
   border-radius: 0.2rem;
   white-space: pre-wrap;
   word-break: break-all;
 }
-
+code::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: .8rem;
+  color: var(--c-text-light-3);
+}
+code.language-js::before {
+  content: 'js';
+}
+code.language-html::before {
+  content: 'html';
+}
+code.language-css::before {
+  content: 'css';
+}
 pre > code {
   display: block;
   background-color: var(--code-bg-color);

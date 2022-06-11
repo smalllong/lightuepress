@@ -4,9 +4,9 @@
 
   --c-divider: rgba(255, 255, 255, 0.2);
 
-  --c-text-light-1: #fff;
-  --c-text-light-2: #ddd;
-  --c-text-light-3: #bbb;
+  --c-text-light-1: #ddd;
+  --c-text-light-2: #bbb;
+  --c-text-light-3: #999;
 
   --c-brand: #7bf;
   --c-brand-light: #9cf;
@@ -24,6 +24,10 @@ body.light {
   --c-text: #000;
 
   --c-divider: rgba(0, 0, 0, 0.2);
+
+  --c-text-light-1: #222;
+  --c-text-light-2: #444;
+  --c-text-light-3: #666;
 
   --c-brand: #05a;
   --c-brand-light: #048;
@@ -53,6 +57,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
   height: var(--header-height);
   border-bottom: 1px solid var(--c-divider);
   display: flex;
@@ -63,7 +68,12 @@ body {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
+.sidebar-toggler {
+  display: none;
+  line-height: 1.6rem;
+}
 .nav-bar-title {
+  margin-right: auto;
   color: var(--c-brand);
   font-size: 2rem;
   text-shadow: 0 0 4px var(--c-brand);
@@ -116,6 +126,7 @@ body {
   top: var(--header-height);
   left: 0;
   bottom: 0;
+  z-index: 100;
   border-right: 1px solid var(--c-divider);
   width: 16rem;
   line-height: 2;
@@ -148,4 +159,37 @@ a.sidebar-item.active {
 .page {
   margin-left: 16rem;
   padding: var(--header-height) 1.5rem 4rem;
+}
+
+@media screen and (max-width: 600px) {
+  .nav-bar {
+    padding: 0;
+  }
+  .nav-bar-title {
+    font-size: 1.6rem;
+  }
+  .nav-bar > .nav {
+    text-align: right;
+  }
+  .nav-item {
+    padding: 0.1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .sidebar {
+    display: none;
+  }
+  .sidebar.shown {
+    display: block;
+    background-color: var(--header-bg);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .sidebar-toggler {
+    display: block;
+  }
+  .page {
+    margin-left: 0;
+    padding: var(--header-height) 1rem 3rem;
+  }
 }
