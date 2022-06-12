@@ -6,7 +6,7 @@ import Link from './Link'
  * @param {number} level - how deep is it
  * @param {Function} locale - current page locale
  * @param {Function} route - current page route
- * @returns {Object} VDomSrc
+ * @returns {object} VDomSrc
  */
 export default function SidebarLinks(arr, level, locale, route) {
   return arr.map((item) => ({

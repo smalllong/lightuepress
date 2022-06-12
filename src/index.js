@@ -102,9 +102,9 @@ function Lightuepress(config) {
 
   var cachedMD = {}
   /**
-   * scroll element to below header
-   * @param {HTMLElement} wrapper
-   * @param {string} hash
+   * scroll target element to below header
+   * @param {HTMLElement} wrapper - page wrapper
+   * @param {string} hash - target element's hash
    */
   function scrollTo(wrapper, hash) {
     if (hash) {
