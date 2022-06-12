@@ -7,15 +7,14 @@ a:hover {
 }
 
 h2 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin: 2rem 0 1rem;
   border-bottom: 1px solid var(--c-divider);
   padding-bottom: 0.3rem;
 }
 
 code {
   position: relative;
-  background-color: var(--code-inline-bg-color);
+  background-color: var(--code-bg-color);
   padding: 0.3rem 0.5rem;
   border-radius: 0.2rem;
   white-space: pre-wrap;
@@ -26,7 +25,7 @@ code::before {
   top: 0;
   right: 0;
   font-size: .8rem;
-  color: var(--c-text-light-3);
+  color: var(--c-text-light);
 }
 code.language-js::before {
   content: 'js';
@@ -49,10 +48,10 @@ pre > code {
   color: #f66;
 }
 .hl-n {
-  color: #6f6;
+  color: #4c4;
 }
 .hl-m {
-  color: #cc3;
+  color: #aa1;
 }
 .hl-i {
   color: #66f;

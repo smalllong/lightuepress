@@ -4,17 +4,13 @@
 
   --c-divider: rgba(255, 255, 255, 0.2);
 
-  --c-text-light-1: #ddd;
-  --c-text-light-2: #bbb;
-  --c-text-light-3: #999;
+  --c-text-light: #999;
 
   --c-brand: #7bf;
-  --c-brand-light: #9cf;
 
-  --shadow: 0 6px 32px rgba(255, 255, 255, 0.4), 0 2px 6px rgba(255, 255, 255, 0.2);
+  --shadow: 0 4px 16px rgba(255, 255, 255, 0.4);
 
-  --code-inline-bg-color: rgba(255, 255, 255, 0.2);
-  --code-bg-color: #282c34;
+  --code-bg-color: #111;
 
   --header-height: 3rem;
   --header-bg: rgba(170, 170, 170, 0.2);
@@ -25,16 +21,12 @@ body.light {
 
   --c-divider: rgba(0, 0, 0, 0.2);
 
-  --c-text-light-1: #222;
-  --c-text-light-2: #444;
-  --c-text-light-3: #666;
+  --c-text-light: #666;
 
   --c-brand: #05a;
-  --c-brand-light: #048;
 
-  --shadow: 0 6px 32px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 
-  --code-inline-bg-color: #eee;
   --code-bg-color: #eee;
 
   --header-bg: rgba(85, 85, 85, 0.2);
@@ -61,7 +53,6 @@ body {
   height: var(--header-height);
   border-bottom: 1px solid var(--c-divider);
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 1.5rem;
   background-color: var(--header-bg);
@@ -93,25 +84,27 @@ body {
   cursor: pointer;
 }
 .nav-item:hover,
-.nav-item.active {
-  border-bottom-color: var(--c-brand);
+.nav-item.active,
+a.sidebar-item:hover,
+a.sidebar-item.active {
+  border-color: var(--c-brand);
   color: var(--c-brand);
   text-shadow: 0 0 4px var(--c-brand);
   text-decoration: none;
 }
-.dialog {
+.dropdown {
   display: none;
   box-shadow: var(--shadow);
   border-radius: 4px;
   background-color: var(--c-bg);
 }
-.dialog > a {
+.dropdown > a {
   display: block;
 }
 .locales {
   position: relative;
 }
-.locales:hover > .dialog {
+.locales:hover > .dropdown {
   display: block;
   position: absolute;
   bottom: -4px;
@@ -147,13 +140,6 @@ body {
 }
 .sidebar-item-2 {
   padding-left: 3rem;
-}
-a.sidebar-item:hover,
-a.sidebar-item.active {
-  border-left-color: var(--c-brand);
-  color: var(--c-brand);
-  text-shadow: 0 0 4px var(--c-brand);
-  text-decoration: none;
 }
 
 .page {
