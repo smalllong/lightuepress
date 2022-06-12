@@ -1,6 +1,6 @@
 {
   "name": "lightuepress",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lightue and snarkdown powered static site generator",
   "browser": "src/index.js",
   "type": "module",
