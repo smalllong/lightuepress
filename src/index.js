@@ -30,15 +30,16 @@ function Lightuepress(config) {
         $$: '📑',
         onclick: (e) => (S.sidebarShown = !S.sidebarShown),
       }),
-      navBarTitle: Link(
-        () => '#' + S.locale,
-        () => S.config.title
-      ),
+      navBarTitle: Link(() => ({ href: '#' + S.locale, text: S.config.title })),
       nav: {
         $tag: 'nav',
         $$: () =>
           S.config.nav.map((n) =>
-            Link('#' + S.locale + n.link.slice(1), n.text, () => new RegExp(n.activeMatch).test(S.route))
+            Link(() => ({
+              href: '#' + S.locale + n.link.slice(1),
+              text: n.text,
+              active: new RegExp(n.activeMatch).test(S.route),
+            }))
           ),
         $_locales: {
           $if: locales.length > 1,
@@ -48,14 +49,12 @@ function Lightuepress(config) {
           }),
           dropdown: locales.map((l) =>
             Link(
-              () => '#' + l + S.route.slice(1),
-              config.locales[l].label,
-              () => l == S.locale,
+              () => ({ href: '#' + l + S.route.slice(1), text: config.locales[l].label, active: l == S.locale }),
               'sidebarItem'
             )
           ),
         },
-        navItem: config.repo && Link('https://github.com/' + config.repo, 'GitHub ↗'),
+        //navItem: config.repo && Link(() => ({ href: 'https://github.com/' + config.repo, text: 'GitHub ↗' })),
         toggleLight: L.button.navItem({
           $$: '💡',
           onclick: (e) => {
@@ -70,10 +69,12 @@ function Lightuepress(config) {
         for (var i in S.config.sidebar) {
           if (S.route.startsWith(i)) {
             return SidebarLinks(
+              () => ({
+                locale: S.locale,
+                route: S.route,
+              }),
               S.config.sidebar[i],
-              0,
-              () => S.locale,
-              () => S.route
+              0
             )
           }
         }

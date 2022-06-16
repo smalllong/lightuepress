@@ -1,25 +1,24 @@
 import Link from './Link'
+import L from 'lightue'
 
 /**
  * Recursive Sidebar Link Tree
- * @param {Array} arr - links data
+ * @param {object} props - {locale: current page locale, route: current page route}
+ * @param {object} arr - links data
  * @param {number} level - how deep is it
- * @param {Function} locale - current page locale
- * @param {Function} route - current page route
  * @returns {object} VDomSrc
  */
-export default function SidebarLinks(arr, level, locale, route) {
+export default function SidebarLinks(props, arr, level) {
+  var P = L.useProp(props)
   return arr.map((item) => ({
-    $$: Object.assign(
+    sidebarItem: Object.assign(
       item.link
-        ? Link(
-            () => '#' + locale() + item.link.slice(1),
-            '',
-            () => route() == item.link
-          )
+        ? Link(() => ({ href: '#' + P.locale + item.link.slice(1), text: '', active: P.route == item.link }))
         : {},
-      { _class: 'sidebar-item sidebar-item-' + level, $$: item.text }
+      { _dataLevel: level, $$: item.text }
     ),
-    sidebarLinks: item.children ? SidebarLinks(item.children, level + 1, locale, route) : null,
+    sidebarLinks: item.children
+      ? SidebarLinks(() => ({ locale: P.locale, route: P.route }), item.children, level + 1)
+      : null,
   }))
 }
