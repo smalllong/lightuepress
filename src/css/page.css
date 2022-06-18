@@ -1,3 +1,12 @@
+.edit-link {
+  float: right;
+  margin-top: 0.5rem;
+}
+
+main {
+  clear: both;
+}
+
 a {
   color: var(--c-brand);
   text-decoration: none;
@@ -24,7 +33,7 @@ code::before {
   position: absolute;
   top: 0;
   right: 0;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: var(--c-text-light);
 }
 code.language-js::before {
@@ -58,4 +67,10 @@ pre > code {
 }
 .hl-c {
   color: #999;
+}
+
+.page-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
 }

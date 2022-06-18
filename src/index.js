@@ -18,9 +18,22 @@ function Lightuepress(config) {
       config: {},
       route: '', // default is empty, later it changed to '/' and load md file
       sidebarShown: false,
+      curSidebar: [], // current showing sidebar
+      pages: [],
     })
 
   L.watchEffect(() => (S.config = config.locales[S.locale]))
+  L.watchEffect(() => {
+    for (var i in S.config.sidebar) {
+      if (S.route.startsWith(i)) {
+        S.curSidebar = S.config.sidebar[i]
+        break
+      }
+    }
+  })
+  L.watchEffect(() => {
+    S.pages = S.curSidebar.reduce((previous, current) => previous.concat(current.children), [])
+  })
 
   if (!window.matchMedia('(prefers-color-scheme:dark)').matches) document.body.classList.add('light')
 
@@ -54,7 +67,7 @@ function Lightuepress(config) {
             )
           ),
         },
-        //navItem: config.repo && Link(() => ({ href: 'https://github.com/' + config.repo, text: 'GitHub ↗' })),
+        navItem: config.repo && Link(() => ({ href: 'https://github.com/' + config.repo, text: 'GitHub ↗' })),
         toggleLight: L.button.navItem({
           $$: '💡',
           onclick: (e) => {
@@ -65,23 +78,16 @@ function Lightuepress(config) {
     },
     sidebar: {
       $class: { shown: () => S.sidebarShown },
-      sidebarLinks: () => {
-        for (var i in S.config.sidebar) {
-          if (S.route.startsWith(i)) {
-            return SidebarLinks(
-              () => ({
-                locale: S.locale,
-                route: S.route,
-              }),
-              S.config.sidebar[i],
-              0
-            )
-          }
-        }
-      },
+      sidebarLinks: SidebarLinks(
+        () => ({
+          locale: S.locale,
+          route: S.route,
+          arr: S.curSidebar,
+        }),
+        0
+      ),
     },
     page: {
-      $tag: 'main',
       onclick: (e) => {
         var a = e.target
         while (a && a.tagName != 'A') a = a.parentElement
@@ -98,6 +104,40 @@ function Lightuepress(config) {
           location.hash = '#' + S.locale + abso[0].slice(1) + (abso[1] ? '#' + encodeURIComponent(abso[1]) : '')
         } else window.open(href)
       },
+      pageHeader: L.header({
+        editLink: config.editLinks
+          ? L.a({
+              _href: () =>
+                `https://github.com/${config.repo}/edit/${config.docsBranch}/docs${
+                  S.locale + (S.route.slice(1) || 'index')
+                }.md`,
+              $$: () => S.config.editLinkText + ' ↗',
+            })
+          : null,
+      }),
+      pageMain: {
+        $tag: 'main',
+      },
+      pageFooter: L.footer({
+        prev: () => {
+          var curPageIndex = S.pages.findIndex((p) => p.link == S.route)
+          return curPageIndex > 0
+            ? L.a({
+                _href: S.pages[curPageIndex - 1].link,
+                $$: '⇦ ' + S.pages[curPageIndex - 1].text,
+              })
+            : {}
+        },
+        next: () => {
+          var curPageIndex = S.pages.findIndex((p) => p.link == S.route)
+          return curPageIndex < S.pages.length - 1
+            ? L.a({
+                _href: S.pages[curPageIndex + 1].link,
+                $$: S.pages[curPageIndex + 1].text + ' ⇨',
+              })
+            : {}
+        },
+      }),
     },
   })
 
@@ -147,7 +187,7 @@ function Lightuepress(config) {
       window.scrollTo(0, 0)
       mainEl.innerHTML = cachedMD[path]
       scrollTo(mainEl, hash)
-      mainEl.querySelectorAll('pre > code').forEach((code) => {
+      ;[...mainEl.querySelectorAll('pre > code')].forEach((code) => {
         code.innerHTML = highlight(code.innerHTML, code.className.slice(9))
       })
     }
