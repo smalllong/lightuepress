@@ -101,15 +101,15 @@ a.sidebar-item.active {
 .dropdown > a {
   display: block;
 }
-.locales {
+.nav-dropdown {
   position: relative;
 }
-.locales:hover > .dropdown {
+.nav-dropdown:hover > .dropdown {
   display: block;
   position: absolute;
   bottom: -4px;
   right: 0;
-  width: 100%;
+  min-width: 100%;
   text-align: center;
   transform: translateY(100%);
 }

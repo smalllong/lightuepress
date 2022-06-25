@@ -33,7 +33,7 @@
   "author": "Xiaolong Li",
   "license": "MIT",
   "dependencies": {
-    "lightue": "^0.3.3",
+    "lightue": "^0.4.0",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "snarkdown": "^2.0.0"

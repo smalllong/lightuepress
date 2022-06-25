@@ -48,15 +48,33 @@ function Lightuepress(config) {
         $tag: 'nav',
         $$: () =>
           S.config.nav.map((n) =>
-            Link(() => ({
-              href: '#' + S.locale + n.link.slice(1),
-              text: n.text,
-              active: new RegExp(n.activeMatch).test(S.route),
-            }))
+            n.items
+              ? L.span({
+                  _class: 'nav-dropdown',
+                  navItem: L.span({
+                    $$: n.text,
+                    $$arrow: ' ▽',
+                  }),
+                  dropdown: n.items.map((item) =>
+                    Link(
+                      () => ({
+                        href: item.link,
+                        text: item.text,
+                        active: item.active != undefined ? item.active : new RegExp(n.activeMatch).test(S.route),
+                      }),
+                      'sidebarItem'
+                    )
+                  ),
+                })
+              : Link(() => ({
+                  href: '#' + S.locale + n.link.slice(1),
+                  text: n.text,
+                  active: new RegExp(n.activeMatch).test(S.route),
+                }))
           ),
-        $_locales: {
+        $_navDropdown: {
           $if: locales.length > 1,
-          navItem: L.button({
+          navItem: L.span({
             $$: () => config.locales[S.locale].selectText,
             $$arrow: ' ▽',
           }),

@@ -990,10 +990,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lightue@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/lightue/-/lightue-0.3.3.tgz#e7803e0d345fb9067fd4ab7cc49135e79ab63b55"
-  integrity sha512-mlUs7GoL52qTlG30X0QOtBGx28Ujr4ObZ2I+y0GyBGFe9+Vx5PiTQW5zWn2zZlsNiiiaaB3u2Nz57JeooVixMQ==
+lightue@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/lightue/-/lightue-0.4.0.tgz#cd2a944d553dae227813272b549b33a5f1f49c0d"
+  integrity sha512-lQ/Hkeq7DUPknYM8KZXFh8vvl6stPPcCzUGe0j4rzTJw+uzE3wFqfmXR5e6XJaMoh1SuBGokS7SEWCNsAYjDFQ==
 
 lilconfig@^2.0.3, lilconfig@^2.0.5:
   version "2.0.5"
