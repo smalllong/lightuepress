@@ -2,18 +2,14 @@ import L from 'lightue'
 
 /**
  * Link component
- * @param {object} props - {href: link href, active: highlighted when true, text: link text}
- * @param {string=} classname - optional classname
+ * @param {object} P - {href: link href, active: highlighted when true, text: link text}
  * @returns {object} VDomSrc
  */
-export default function Link(props, classname) {
-  var P = L.useProp(props)
-  var tag = classname ? L.a[classname] : L.a,
-    content = {
-      _href: P.$href,
-      $class: { active: P.$active },
-      $$: P.$text,
-    }
-  if (typeof P.href == 'string' && P.href.startsWith('http')) content._target = '_blank'
-  return tag(content)
-}
+export default L.useComp(function Link(P) {
+  return L.a({
+    _href: P.$href,
+    _target: typeof P.href == 'string' && P.href.startsWith('http') ? '_blank' : null,
+    $class: { active: P.$active },
+    $$: P.$text,
+  })
+})

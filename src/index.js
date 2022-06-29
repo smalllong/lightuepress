@@ -51,19 +51,16 @@ function Lightuepress(config) {
             n.items
               ? L.span({
                   _class: 'nav-dropdown',
-                  navItem: L.span({
+                  navItem: L.button({
                     $$: n.text,
                     $$arrow: ' ▽',
                   }),
                   dropdown: n.items.map((item) =>
-                    Link(
-                      () => ({
-                        href: item.link,
-                        text: item.text,
-                        active: item.active != undefined ? item.active : new RegExp(n.activeMatch).test(S.route),
-                      }),
-                      'sidebarItem'
-                    )
+                    Link.sidebarItem(() => ({
+                      href: item.link,
+                      text: item.text,
+                      active: item.active != undefined ? item.active : new RegExp(n.activeMatch).test(S.route),
+                    }))
                   ),
                 })
               : Link(() => ({
@@ -74,15 +71,16 @@ function Lightuepress(config) {
           ),
         $_navDropdown: {
           $if: locales.length > 1,
-          navItem: L.span({
+          navItem: L.button({
             $$: () => config.locales[S.locale].selectText,
             $$arrow: ' ▽',
           }),
           dropdown: locales.map((l) =>
-            Link(
-              () => ({ href: '#' + l + S.route.slice(1), text: config.locales[l].label, active: l == S.locale }),
-              'sidebarItem'
-            )
+            Link.sidebarItem(() => ({
+              href: '#' + l + S.route.slice(1),
+              text: config.locales[l].label,
+              active: l == S.locale,
+            }))
           ),
         },
         navItem: config.repo && Link(() => ({ href: 'https://github.com/' + config.repo, text: 'GitHub ↗' })),
