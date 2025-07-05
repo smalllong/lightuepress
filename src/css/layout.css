@@ -41,7 +41,7 @@ body {
   background-color: var(--c-bg);
 }
 
-.nav-bar {
+.navBar {
   position: fixed;
   top: 0;
   left: 0;
@@ -55,19 +55,19 @@ body {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
-.sidebar-toggler {
+.sidebarToggler {
   display: none;
   line-height: 1.6rem;
 }
-.nav-bar-title {
+.navBarTitle {
   margin-right: auto;
   font-size: 2rem;
 }
-.nav-bar .sidebar-item {
+.navBar .sidebarItem {
   padding: 0.2rem;
   margin: 0.2rem;
 }
-.nav-item {
+.navItem {
   padding: 0.2rem;
   margin: 0 0.4rem;
   border: none;
@@ -77,10 +77,10 @@ body {
   font-size: 1rem;
   cursor: pointer;
 }
-.nav-item:hover,
-.nav-item.active,
-a.sidebar-item:hover,
-a.sidebar-item.active {
+.navItem:hover,
+.navItem.active,
+a.sidebarItem:hover,
+a.sidebarItem.active {
   border-color: var(--c-brand);
   color: var(--c-brand);
   text-shadow: 0 0 4px var(--c-brand);
@@ -96,10 +96,10 @@ a.sidebar-item.active {
   min-width: 100%;
   text-align: center;
 }
-.nav-dropdown {
+.navDropdown {
   position: relative;
 }
-.nav-dropdown:hover > .dropdown {
+.navDropdown:hover > .dropdown {
   display: block;
 }
 
@@ -113,21 +113,21 @@ a.sidebar-item.active {
   width: 16rem;
   line-height: 2;
 }
-.sidebar-item {
+.sidebarItem {
   display: block;
   border-left: 4px solid transparent;
   color: var(--c-text);
 }
-.sidebar-item[data-level="0"] {
+.sidebarItem[data-level="0"] {
   margin-top: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
   padding-left: 1rem;
 }
-.sidebar-item[data-level="1"] {
+.sidebarItem[data-level="1"] {
   padding-left: 2rem;
 }
-.sidebar-item[data-level="2"] {
+.sidebarItem[data-level="2"] {
   padding-left: 3rem;
 }
 
@@ -137,16 +137,16 @@ a.sidebar-item.active {
 }
 
 @media screen and (max-width: 600px) {
-  .nav-bar {
+  .navBar {
     padding: 0;
   }
-  .nav-bar-title {
+  .navBarTitle {
     font-size: 1.6rem;
   }
-  .nav-bar > .nav {
+  .navBar > .nav {
     text-align: right;
   }
-  .nav-item {
+  .navItem {
     padding: 0.1rem;
     font-size: 0.8rem;
     white-space: nowrap;
@@ -160,7 +160,7 @@ a.sidebar-item.active {
   .sidebar.shown {
     display: block;
   }
-  .sidebar-toggler {
+  .sidebarToggler {
     display: block;
   }
   .page {

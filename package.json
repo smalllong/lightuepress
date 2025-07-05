@@ -1,6 +1,6 @@
 {
   "name": "lightuepress",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Lightue and snarkdown powered static site generator",
   "browser": "src/index.js",
   "type": "module",
@@ -33,17 +33,18 @@
   "author": "Xiaolong Li",
   "license": "MIT",
   "dependencies": {
-    "lightue": "^0.4.0",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "snarkdown": "^2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "coffeescript": "^2.7.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.17.0",
-    "eslint-plugin-jsdoc": "^39.3.2",
+    "eslint-plugin-jsdoc": "^51.3.3",
     "postcss": "^8.4.14",
+    "rollup-plugin-coffee-script": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "terser": "^5.14.1"

@@ -1,4 +1,4 @@
-.edit-link {
+.editLink {
   float: right;
   margin-top: 0.5rem;
 }
@@ -69,7 +69,7 @@ pre > code {
   color: #999;
 }
 
-.page-footer {
+.pageFooter {
   margin-top: 2rem;
   display: flex;
   justify-content: space-between;
